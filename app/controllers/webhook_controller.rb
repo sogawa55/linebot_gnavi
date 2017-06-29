@@ -49,17 +49,8 @@ class WebhookController < ApplicationController
     end
 
     json = JSON.parse(response.body)
-    result = {}
-    result['name'] = json['rest']['name'] if json['rest'].include?('name')
-    result['shop_image1'] = json['rest']['image_url']['shop_image1'] if json['rest'].include?('image_url')
-    result['address'] = json['rest']['address'] if json['rest'].include?('address')
-    result['latitude'] = json['rest']['latitude'] if json['rest'].include?('latitude')
-    result['longitude'] = json['rest']['longitude'] if json['rest'].include?('longitude')
-    result['opentime'] = json['rest']['opentime'] if json['rest'].include?('opentime')
-    return result
-    end
     
-    output_text = result
+    output_text = json['name'].to_s
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, output_text)
