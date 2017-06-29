@@ -21,6 +21,10 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'dotenv-rails'
+gem 'faraday'
+gem 'faraday_middleware'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -45,12 +49,8 @@ group :development do
   gem 'spring'
 end
 
-
-gem 'dotenv-rails'
-gem 'faraday'
-gem 'faraday_middleware'
-
 # heroku用
 group :production do
   gem 'rails_12factor'
+  gem 'pg', '0.20.0'
 end
