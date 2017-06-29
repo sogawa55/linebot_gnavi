@@ -24,34 +24,10 @@ class WebhookController < ApplicationController
       builder.use Faraday::Adapter::NetHttp
     end
     
-      send_data = keyword_seach(params, conn)
-      send(params, send_data)
-      
-    def keyword_seach(params, conn)
-    search_place = params['text']
-    search_place_array = search_place.split("\n")
-
-    if search_place_array.length == 2
-      keyword_array = search_place_array[1].split("、")
-      gnavi_keyword = keyword_array.join()
-    end
-
-     # GETでAPIを叩く
-    response = conn.get do |req|
-      req.params[:keyid] = ENV['GURUNAVI_API_KEY']
-      req.params[:format] = 'json'
-      req.params[:address] = search_place_array[0]
-      req.params[:hit_per_page] = 1
-      req.params[:freeword] = gnavi_keyword
-      req.params[:freeword_condition] = 2
-      req.headers['Content-Type'] = 'application/json; charset=UTF-8'
-    end
-
-    json = JSON.parse(response.body)
+    gnavi_client = GnaviClient.new(keyid: ENV['GURUNAVI_API_KEY'])
+    send_data = gnavi_client.keyword_seach(params, conn)
     
-    end
-    
-    output_text = json['name'].to_s
+    output_text = send_data.to_s
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, output_text)
