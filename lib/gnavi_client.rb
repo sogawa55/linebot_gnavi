@@ -12,7 +12,7 @@ class GnaviClient
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    result = response.body
+    result = JSON(response.body)
     
     return result
   end
