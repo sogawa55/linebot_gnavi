@@ -10,16 +10,56 @@ class WebhookController < ApplicationController
     unless is_validate_signature
       render :nothing => true, status: 470
     end
+    
+  　 # ぐるなびに渡すキーワードの取得
+    params = JSON.parse(request.body.read)
 
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-
-    case event_type
-    when "message"
-      input_text = event["message"]["text"]
-      output_text = input_text
+    
+    
+     conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
+      builder.use Faraday::Request::UrlEncoded
+      builder.use Faraday::Response::Logger
+      builder.use Faraday::Adapter::NetHttp
     end
+    
+      send_data = keyword_seach(params, conn)
+      send(params, send_data)
+      
+    def keyword_seach(params, conn)
+    search_place = params['result'][0]['content']['text']
+    search_place_array = search_place.split("\n")
+
+    if search_place_array.length == 2
+      keyword_array = search_place_array[1].split("、")
+      gnavi_keyword = keyword_array.join()
+    end
+    
+     # GETでAPIを叩く
+    response = conn.get do |req|
+      req.params[:keyid] = ENV['GURUNAVI_API_KEY']
+      req.params[:format] = 'json'
+      req.params[:address] = search_place_array[0]
+      req.params[:hit_per_page] = 1
+      req.params[:freeword] = gnavi_keyword
+      req.params[:freeword_condition] = 2
+      req.headers['Content-Type'] = 'application/json; charset=UTF-8'
+    end
+
+    json = JSON.parse(response.body)
+    result = {}
+    result['name'] = json['rest']['name'] if json['rest'].include?('name')
+    result['shop_image1'] = json['rest']['image_url']['shop_image1'] if json['rest'].include?('image_url')
+    result['address'] = json['rest']['address'] if json['rest'].include?('address')
+    result['latitude'] = json['rest']['latitude'] if json['rest'].include?('latitude')
+    result['longitude'] = json['rest']['longitude'] if json['rest'].include?('longitude')
+    result['opentime'] = json['rest']['opentime'] if json['rest'].include?('opentime')
+    return result
+    end
+    
+    output_text = result
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, output_text)
