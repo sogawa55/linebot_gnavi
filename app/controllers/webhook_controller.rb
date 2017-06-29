@@ -5,6 +5,7 @@ class WebhookController < ApplicationController
   CHANNEL_SECRET = ENV['CHANNEL_SECRET']
   OUTBOUND_PROXY = ENV['OUTBOUND_PROXY']
   CHANNEL_ACCESS_TOKEN = ENV['CHANNEL_ACCESS_TOKEN']
+  GURUNAVI_API_KEY = ENV['GURUNAVI_API_KEY']
 
   def callback
     unless is_validate_signature
@@ -18,14 +19,8 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     
     
-     conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
-      builder.use Faraday::Request::UrlEncoded
-      builder.use Faraday::Response::Logger
-      builder.use Faraday::Adapter::NetHttp
-    end
-    
     gnavi_client = GnaviClient.new(keyid: ENV['GURUNAVI_API_KEY'])
-    input_text = gnavi_client.keyword_seach(params, conn)
+    input_text = gnavi_client.keyword_seach(params)
     
     output_text = input_text
 
