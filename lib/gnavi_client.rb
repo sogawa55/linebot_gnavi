@@ -12,17 +12,18 @@ class GnaviClient
   end
   
 
-    def keyword_seach(params)
+    def keyword_seach(text)
          # GETでAPIを叩く
     response = @conn.get do |req|
       req.params[:keyid] = ENV['GURUNAVI_API_KEY']
       req.params[:format] = 'json'
-      req.params[:freeword] = params['text']
+      req.params[:freeword] = text
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    result = JSON(response.body)
-    
+    json = JSON.parse(response.body)
+    result = {}
+    result['name'] = json['rest']['name'] if json['rest'].include?('name')
     return result
   end
 end
