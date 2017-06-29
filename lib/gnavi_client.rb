@@ -23,7 +23,6 @@ class GnaviClient
       req.params[:freeword_condition] = 2
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
-    
     result = response.body
     
     return result
