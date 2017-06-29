@@ -11,7 +11,6 @@ class WebhookController < ApplicationController
       render :nothing => true, status: 470
     end
     
-  　 # ぐるなびに渡すキーワードの取得
     params = JSON.parse(request.body.read)
 
     event = params["events"][0]
