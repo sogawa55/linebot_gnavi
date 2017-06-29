@@ -29,12 +29,13 @@ class WebhookController < ApplicationController
       send(params, send_data)
       
     def keyword_seach(params, conn)
-    search_place = params['result'][0]['content']['text']
+    search_place = params['text']
     search_place_array = search_place.split("\n")
 
     if search_place_array.length == 2
       keyword_array = search_place_array[1].split("、")
       gnavi_keyword = keyword_array.join()
+    end
     end
     
      # GETでAPIを叩く
