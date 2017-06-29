@@ -35,8 +35,7 @@ class WebhookController < ApplicationController
       keyword_array = search_place_array[1].split("、")
       gnavi_keyword = keyword_array.join()
     end
-    end
-    
+
      # GETでAPIを叩く
     response = conn.get do |req|
       req.params[:keyid] = ENV['GURUNAVI_API_KEY']
@@ -49,6 +48,8 @@ class WebhookController < ApplicationController
     end
 
     json = JSON.parse(response.body)
+    
+    end
     
     output_text = json['name'].to_s
 
