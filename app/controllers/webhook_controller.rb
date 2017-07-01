@@ -26,11 +26,13 @@ class WebhookController < ApplicationController
     
              # GETでAPIを叩く
     output_text = keyword_search(conn, input_text)
-    message = output_text["rest"]["name"]
+    message = [] 
+    message.push(output_text["rest"]["name"])
+    send_message = message[0]
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, message)
+    res = client.reply(replyToken, send_message)
 
     if res.status == 200
       logger.info({success: res})
