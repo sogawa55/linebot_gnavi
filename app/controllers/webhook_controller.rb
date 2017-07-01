@@ -21,7 +21,7 @@ class WebhookController < ApplicationController
     
     gnavi_client = GnaviClient.new(keyid: ENV['GURUNAVI_API_KEY'])
     result = gnavi_client.keyword_seach(event['text'])
-    output_text = result
+    output_text = result[name:rest]
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, output_text)

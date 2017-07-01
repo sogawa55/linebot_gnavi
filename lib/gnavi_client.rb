@@ -23,6 +23,6 @@ class GnaviClient
     end
     
     result = response.body
-    return result['rest']['name']
+    return result
     end
 end
