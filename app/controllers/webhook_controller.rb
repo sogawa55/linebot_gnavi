@@ -52,7 +52,7 @@ class WebhookController < ApplicationController
     end
     
     result = JSON.parse(response.body)
-    return result['rest']['name']
+    return result[0]
    end
   
   private
