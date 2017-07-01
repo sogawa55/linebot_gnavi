@@ -16,7 +16,7 @@ class GnaviClient
     response = @conn.get do |req|
       req.params[:keyid] = ENV['GURUNAVI_API_KEY']
       req.params[:format] = 'json'
-      req.params[:freeword] = '焼肉'
+      req.params[:freeword] = text
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
