@@ -15,7 +15,7 @@ class WebhookController < ApplicationController
     
     params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
     
-    @conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
+    conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
       builder.use Faraday::Request::UrlEncoded
       builder.use Faraday::Response::Logger
       builder.use Faraday::Adapter::NetHttp
@@ -24,21 +24,11 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    @input_text = event["text"]
+    input_text = event["text"]
     
              # GETでAPIを叩く
-    response = @conn.get do |req|
-      req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
-      req.params[:format] = 'json'
-      req.params[:freeword] = params["text"]
-      req.params[:hit_per_page] = 1
-      req.headers['Content-Type'] = 'application/json; charset=UTF-8'
-    end
-    
-    json = JSON.parse(response.body)
-    result  = json["rest"]["name"]
-    
-    messeage = result
+    output_text = keyword_search(input_text,conn)
+    messeage = output_text
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -52,6 +42,23 @@ class WebhookController < ApplicationController
 
     render :nothing => true, status: :ok
   end
+  
+  def keyword_search(input_text,conn)
+    
+      response = conn.get do |req|
+      req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
+      req.params[:format] = 'json'
+      req.params[:freeword] = input_text
+      req.params[:hit_per_page] = 1
+      req.headers['Content-Type'] = 'application/json; charset=UTF-8'
+    end
+    
+    json = JSON.parse(response.body)
+    result  = json["rest"]["name"]
+    return result
+  end 
+  
+  
   
   private
   # verify access from LINE
