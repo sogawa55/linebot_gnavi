@@ -7,7 +7,7 @@ class WebhookController < ApplicationController
   CHANNEL_ACCESS_TOKEN = ENV['CHANNEL_ACCESS_TOKEN']
   GURUNAVI_API_KEY = ENV['GURUNAVI_API_KEY']
   
-  $input_text = params["text"]
+ 
 
   def callback
     unless is_validate_signature
@@ -17,6 +17,7 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
+    $input_text = params["text"]
 
     params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
     
