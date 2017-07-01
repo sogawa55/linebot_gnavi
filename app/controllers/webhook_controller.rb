@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     
     output_text = keyword_seach(event['text'])
-    messeage = output_text['name'].to_s
+    messeage = output_text.to_s
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -52,7 +52,7 @@ class WebhookController < ApplicationController
     end
     
     result = JSON.parse(response.body)
-    return result
+    return result['rest']['name']
    end
   
   private
