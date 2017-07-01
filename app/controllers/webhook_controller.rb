@@ -51,7 +51,7 @@ class WebhookController < ApplicationController
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    json = response.body
+    json = JSON.parse(response.body)
     result  = json["rest"]["name"]
     return result
   end 
