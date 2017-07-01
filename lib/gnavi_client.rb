@@ -21,7 +21,9 @@ class GnaviClient
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    json = response.body
-    return json
-  end
+    json = JSON.parse(response.body)
+    result = {}
+    result['name'] = json['rest']['name'] if json['rest'].include?('name')
+    return result
+    end
 end
