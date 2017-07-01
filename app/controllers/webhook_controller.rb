@@ -26,8 +26,9 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     
     output_text = keyword_seach(event['text'])
+    p output_text
     messeage = output_text.to_a
-    messeage_fix = messeage[5]
+    messeage_fix = messeage[0]
     messeage_send = messeage_fix.to_s
 
 
@@ -53,7 +54,8 @@ class WebhookController < ApplicationController
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    result = JSON.parse(response.body)
+    json = JSON.parse(response.body)
+    result  = json["rest"]["name"]
     return result
    end
   
