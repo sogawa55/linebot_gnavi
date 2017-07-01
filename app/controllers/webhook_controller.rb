@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     input_text = event["text"].to_s
     
-    output_text = keyword_seach(input_text)
+    output_text = keyword_seach()
     messeage = output_text 
 
 
@@ -43,13 +43,12 @@ class WebhookController < ApplicationController
   end
   
   
-   def keyword_seach(search_text)
+   def keyword_seach()
          # GETでAPIを叩く
-    gnavi_keyword = search_text
     response = @conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
-      req.params[:freeword] = gnavi_keyword
+      req.params[:freeword] = params["text"]
       req.params[:hit_per_page] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
