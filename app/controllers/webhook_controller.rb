@@ -24,7 +24,7 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    input_text = event["text"]
+    input_text = event["text"].to_s
     
              # GETでAPIを叩く
     output_text = keyword_search(input_text,conn)
