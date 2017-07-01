@@ -22,8 +22,7 @@ class GnaviClient
     end
     
     json = JSON.parse(response.body)
-    result = {}
-    result['name'] = json['rest']['name'] if json['rest'].include?('name')
-    return result['name']
+    result = json['rest']
+    return result
     end
 end
