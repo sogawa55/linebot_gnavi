@@ -42,7 +42,7 @@ class WebhookController < ApplicationController
     render :nothing => true, status: :ok
   end
   
-  def keyword_search(input_text,conn)
+  def keyword_search(conn)
     
       response = conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
