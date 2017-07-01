@@ -30,7 +30,7 @@ class WebhookController < ApplicationController
     response = @conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
-      req.params[:freeword] = request.body["text"]
+      req.params[:freeword] = params["text"]
       req.params[:hit_per_page] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
