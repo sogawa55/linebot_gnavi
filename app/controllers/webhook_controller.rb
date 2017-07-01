@@ -26,10 +26,11 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     
     output_text = keyword_seach(event['text'])
+    messeage =output_text.to_s
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, output_text)
+    res = client.reply(replyToken, messeage)
 
     if res.status == 200
       logger.info({success: res})
