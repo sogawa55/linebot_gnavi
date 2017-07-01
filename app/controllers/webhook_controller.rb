@@ -11,17 +11,24 @@ class WebhookController < ApplicationController
     unless is_validate_signature
       render :nothing => true, status: 470
     end
+
     
     params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
+    
+    @conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
+      builder.use Faraday::Request::UrlEncoded
+      builder.use Faraday::Response::Logger
+      builder.use Faraday::Adapter::NetHttp
+    end
 
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
     
     
-    gnavi_client = GnaviClient.new(keyid: ENV['GURUNAVI_API_KEY'])
-    result = gnavi_client.keyword_seach(event['text'])
-    output_text = result[name:rest]
+    gnavi_client = GnaviClient.new(keyid: 'f7ccc130ee2c327dce69399bc08f71e2')
+    result = gnavi_client.keyword_seach(event['text'], @conn)
+    output_text = result
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, output_text)

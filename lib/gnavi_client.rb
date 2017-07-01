@@ -5,16 +5,8 @@ class GnaviClient
   end
   
 
-    def keyword_seach(search_text)
-    @conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
-      builder.use Faraday::Request::UrlEncoded
-      builder.use Faraday::Response::Logger
-      builder.use Faraday::Adapter::NetHttp
-    end
+    def keyword_seach(search_text,conn)
          # GETでAPIを叩く
-    
-    
-         
     response = @conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
@@ -22,7 +14,10 @@ class GnaviClient
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    result = response.body
+    result = JSON.parse(response.body)
+    result = {}
+    result['name'] = json['rest']['name'] if json['rest'].include?('name')
     return result
     end
+    
 end
