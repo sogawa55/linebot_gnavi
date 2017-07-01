@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     
     output_text = keyword_seach(event['text'])
-    messeage =output_text.to_s
+    messeage = output_text.to_s
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -51,9 +51,7 @@ class WebhookController < ApplicationController
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    json = JSON.parse(response.body)
-    result = {}
-    result['name'] = json['rest']['name'] if json['rest'].include?('name')
+    result = JSON.parse(response.body)
     return result
    end
   
