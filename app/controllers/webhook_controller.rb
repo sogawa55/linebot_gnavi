@@ -47,12 +47,12 @@ class WebhookController < ApplicationController
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
       req.params[:freeword]= input_text
-      req.params[:hit_per_page] = 5
+      req.params[:hit_per_page] = 2
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
     json = JSON.parse(response.body)
-    result  = json["rest"]["name"]
+    result  = json["rest"][2]["name"]
     return result
   end 
   
