@@ -16,7 +16,7 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    $input_text = event["messeage"]["text"]
+    input_text = event["message"]["text"]
     
     conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
       builder.use Faraday::Request::UrlEncoded
@@ -25,8 +25,8 @@ class WebhookController < ApplicationController
     end
     
              # GETでAPIを叩く
-    output_text = keyword_search(conn, $input_text)
-    messeage = $input_text
+    output_text = keyword_search(conn, input_text)
+    messeage = input_text
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
