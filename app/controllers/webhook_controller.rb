@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     
              # GETでAPIを叩く
     output_text = keyword_search(conn, input_text)
-    message = output_text
+    message = output_text["rest"]["name"]
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -52,7 +52,7 @@ class WebhookController < ApplicationController
     end
     
     json = JSON.parse(response.body)
-    result  = json["rest"]["name"]
+    result  = json
     return result
   end 
   
