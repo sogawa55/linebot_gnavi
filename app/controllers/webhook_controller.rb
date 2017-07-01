@@ -15,7 +15,7 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    $input_text = event["text"]
+    $input_text = params["text"]
 
     params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
     
@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     end
     
              # GETでAPIを叩く
-    output_text = keyword_search(conn)
+    output_text = keyword_search()
     messeage = output_text
 
 
@@ -42,7 +42,7 @@ class WebhookController < ApplicationController
     render :nothing => true, status: :ok
   end
   
-  def keyword_search(conn)
+  def keyword_search()
     
       response = conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
