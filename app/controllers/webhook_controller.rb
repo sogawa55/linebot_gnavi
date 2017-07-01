@@ -27,7 +27,7 @@ class WebhookController < ApplicationController
     
     output_text = keyword_seach(event['text'])
     messeage = output_text.to_a
-    messeage_fix = messeage["rest"]
+    messeage_fix = messeage[5]
     messeage_send = messeage_fix.to_s
 
 
