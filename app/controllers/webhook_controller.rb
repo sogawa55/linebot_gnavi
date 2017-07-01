@@ -52,7 +52,6 @@ class WebhookController < ApplicationController
 
     render :nothing => true, status: :ok
   end
-  end
   
   private
   # verify access from LINE
