@@ -19,11 +19,11 @@ class GnaviClient
     response = @conn.get do |req|
       req.params[:keyid] = ENV['GURUNAVI_API_KEY']
       req.params[:format] = 'json'
-      if  search_text == "" then next end
       req.params[:freeword] = search_text
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
+    if  search_text == "" then next end
     json = JSON.parse(response.body[0])
     result = json['rest']
     return result
