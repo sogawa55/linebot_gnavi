@@ -4,5 +4,4 @@ class GnaviClient
     
   end
   
-
-   
+end
