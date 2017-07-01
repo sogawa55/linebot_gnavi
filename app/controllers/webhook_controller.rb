@@ -27,7 +27,7 @@ class WebhookController < ApplicationController
              # GETでAPIを叩く
     output_text = keyword_search(conn, input_text)
     message = [] 
-    message.push(output_text["rest"]["name"])
+    message.push(output_text["rest"][0]["name"])
     send_message = message[0]
 
 
