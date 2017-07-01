@@ -8,7 +8,6 @@ class WebhookController < ApplicationController
   GURUNAVI_API_KEY = ENV['GURUNAVI_API_KEY']
   
  
-
   def callback
     unless is_validate_signature
       render :nothing => true, status: 470
@@ -18,8 +17,6 @@ class WebhookController < ApplicationController
     event_type = event["type"]
     replyToken = event["replyToken"]
     $input_text = params["text"]
-
-    params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
     
     conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
       builder.use Faraday::Request::UrlEncoded
