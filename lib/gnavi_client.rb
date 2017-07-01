@@ -23,7 +23,6 @@ class GnaviClient
     end
     
     json = JSON.parse(response.body)
-    result = json['rest']
-    return result
+    return json
     end
 end
