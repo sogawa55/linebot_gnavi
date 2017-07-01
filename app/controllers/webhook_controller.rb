@@ -24,8 +24,9 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
+    input_text = event["text"].to_s
     
-    output_text = keyword_seach(event['text'])
+    output_text = keyword_seach(input_text)
     p output_text
     messeage = output_text.to_a
     messeage_fix = messeage[0]
@@ -51,11 +52,13 @@ class WebhookController < ApplicationController
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
       req.params[:freeword] = search_text
+      req.params[:hit_per_page] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
     json = JSON.parse(response.body)
     result  = json["rest"]["name"]
+    
     return result
    end
   
