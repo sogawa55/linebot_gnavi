@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     end
     
              # GETでAPIを叩く
-    output_text = keyword_search($input_text,conn)
+    output_text = keyword_search(conn)
     messeage = output_text
 
 
