@@ -12,7 +12,7 @@ class WebhookController < ApplicationController
       render :nothing => true, status: 470
     end
     
-    params = JSON.parse(request.body.read)
+    params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
 
     event = params["events"][0]
     event_type = event["type"]
