@@ -22,7 +22,7 @@ class GnaviClient
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
-    json = JSON.parse(response.body)
-    return json
+    result = response.body['rest']
+    return result
     end
 end
