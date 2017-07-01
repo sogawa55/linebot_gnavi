@@ -24,9 +24,9 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    input_text = event["text"].to_s
+    @input_text = event["text"]
     
-    output_text = keyword_seach()
+    output_text = keyword_seach(params["text"])
     messeage = output_text 
 
 
@@ -43,12 +43,12 @@ class WebhookController < ApplicationController
   end
   
   
-   def keyword_seach()
+   def keyword_seach(search_text=nil)
          # GETでAPIを叩く
     response = @conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
-      req.params[:freeword] = params["text"]
+      req.params[:freeword] = @input_text
       req.params[:hit_per_page] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
