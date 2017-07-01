@@ -24,10 +24,21 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    @input_text = event["text"]
+    input_text = event["text"]
     
-    output_text = keyword_seach(params["text"])
-    messeage = output_text 
+             # GETでAPIを叩く
+    response = @conn.get do |req|
+      req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
+      req.params[:format] = 'json'
+      req.params[:freeword] = input_text
+      req.params[:hit_per_page] = 1
+      req.headers['Content-Type'] = 'application/json; charset=UTF-8'
+    end
+    
+    json = JSON.parse(response.body)
+    result  = json["rest"]["name"]
+    
+    messeage = result
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -41,23 +52,7 @@ class WebhookController < ApplicationController
 
     render :nothing => true, status: :ok
   end
-  
-  
-   def keyword_seach(search_text=nil)
-         # GETでAPIを叩く
-    response = @conn.get do |req|
-      req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
-      req.params[:format] = 'json'
-      req.params[:freeword] = @input_text
-      req.params[:hit_per_page] = 1
-      req.headers['Content-Type'] = 'application/json; charset=UTF-8'
-    end
-    
-    json = JSON.parse(response.body)
-    result  = json["rest"]["name"]
-    
-    return result
-   end
+  end
   
   private
   # verify access from LINE
