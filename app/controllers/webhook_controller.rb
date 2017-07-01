@@ -6,6 +6,8 @@ class WebhookController < ApplicationController
   OUTBOUND_PROXY = ENV['OUTBOUND_PROXY']
   CHANNEL_ACCESS_TOKEN = ENV['CHANNEL_ACCESS_TOKEN']
   GURUNAVI_API_KEY = ENV['GURUNAVI_API_KEY']
+  
+  $input_text = params["text"]
 
   def callback
     unless is_validate_signature
@@ -15,7 +17,6 @@ class WebhookController < ApplicationController
     event = params["events"][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
-    $input_text = params["text"]
 
     params = JSON.parse(request.body.read ||'{"name":"Not Given"}')
     
@@ -26,7 +27,7 @@ class WebhookController < ApplicationController
     end
     
              # GETでAPIを叩く
-    output_text = keyword_search()
+    output_text = keyword_search(conn, $input_text)
     messeage = output_text
 
 
@@ -42,12 +43,12 @@ class WebhookController < ApplicationController
     render :nothing => true, status: :ok
   end
   
-  def keyword_search()
+  def keyword_search(conn, input_text)
     
       response = conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
-      req.params[:freeword]= $input_text
+      req.params[:freeword]= input_text
       req.params[:hit_per_page] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
