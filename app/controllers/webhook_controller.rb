@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
     
              # GETでAPIを叩く
     output_text = keyword_search(conn, $input_text)
-    messeage = output_text
+    messeage = $input_text
 
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
