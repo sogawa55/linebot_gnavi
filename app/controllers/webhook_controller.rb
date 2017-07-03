@@ -33,7 +33,7 @@ class WebhookController < ApplicationController
           data = keyword_search(conn, latitude,longitude)
           count = data["total_hit_count"].to_i
           if count >= 1 then
-         　   count.times do |x|
+            count.times do |x|
          　   y = x-1  
          　   rest_name =  []
          　   rest_name.push(data["rest"][y]["name"]) 
