@@ -32,8 +32,9 @@ class WebhookController < ApplicationController
                  output_text["rest"][2]["name"],
                  output_text["rest"][3]["name"],
                  output_text["rest"][4]["name"])
-    send_message = message[0] + message[1] + message[2] + message[3] + message[4]
-
+    send_message = message[0] + "\n" + message[1] + "\n" +
+                   message[2] + "\n" + message[3] + "\n" + 
+                   message[4]
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, send_message)
