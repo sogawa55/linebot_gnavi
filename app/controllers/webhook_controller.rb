@@ -39,7 +39,7 @@ class WebhookController < ApplicationController
             x += 1 
           end
           
-          $send_message = rest_name.to_s
+          $send_message = rest_name[0]
     
       else
         $send_message = "失敗"
