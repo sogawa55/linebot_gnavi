@@ -33,8 +33,7 @@ class WebhookController < ApplicationController
           data = keyword_search(conn, latitude,longitude)
          
          　count = data["total_hit_count"]
-         　
-         　if count < 1
+         　if count > 1
          　
          　   count.times do |x| 
          　   y = x-1  
