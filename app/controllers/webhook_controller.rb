@@ -32,7 +32,7 @@ class WebhookController < ApplicationController
           longitude = event["message"]["longitude"] # 経度
           data = keyword_search(conn, latitude,longitude)
           count = data["total_hit_count"].to_i
-          if count > 1 then
+          if count >= 1 then
          　   count.times do |x|
          　   y = x-1  
          　   rest_name =  []
@@ -79,7 +79,6 @@ class WebhookController < ApplicationController
       req.params[:latitude] = latitude
       req.params[:longitude] = longitude
       req.params[:hit_per_page] = 5
-      req.params[:bottomless_cup] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
