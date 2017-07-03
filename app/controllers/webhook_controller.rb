@@ -35,7 +35,7 @@ class WebhookController < ApplicationController
           if count >= 1 then
              count.times do |x|
              rest_name = []
-             rest_name.push($data["rest"][x]["name"])
+             rest_name.push($data["rest"][0]["name"])
              end
              
              z = 0
