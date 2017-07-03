@@ -18,35 +18,54 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     input_text = event["message"]["text"]
     
+    events = request.body.read
+    
+    events.each { |line_event|
+      case line_event
+      when Line::Bot::Event::Messeage
+        case event.type
+        
+        when Line::Bot::Event::MessageType::Text
+         default_message = "位置情報を入力してください。"
+         $send_message = default_message
+        end
+        
+        when Line::Bot::Event::MessageType::Location
+         latitude = event.message['latitude'] # 緯度
+         longitude = event.message['longitude'] # 経度
+         $data = keyword_search(conn, latitude,longitude)
+      end
+    }
+    
+    
     conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
       builder.use Faraday::Request::UrlEncoded
       builder.use Faraday::Response::Logger
       builder.use Faraday::Adapter::NetHttp
     end
-    
-             # GETでAPIを叩く
-    data = keyword_search(conn, input_text)
+  
     rest_name = [] 
-    rest_name.push(data["rest"][0]["name"],
-                   data["rest"][1]["name"],
-                   data["rest"][2]["name"],
-                   data["rest"][3]["name"],
-                   data["rest"][4]["name"])
+    rest_name.push($data["rest"][0]["name"],
+                   $data["rest"][1]["name"],
+                   $data["rest"][2]["name"],
+                   $data["rest"][3]["name"],
+                   $data["rest"][4]["name"])
     rest_url = []
-    rest_url.push(data["rest"][0]["url_mobile"],
-                  data["rest"][1]["url_mobile"],
-                  data["rest"][2]["url_mobile"],
-                  data["rest"][3]["url_mobile"],
-                  data["rest"][4]["url_mobile"])
+    rest_url.push($data["rest"][0]["url"],
+                  $data["rest"][1]["url"],
+                  $data["rest"][2]["url"],
+                  $data["rest"][3]["url"],
+                  $data["rest"][4]["url"])
                    
-    send_message = rest_name[0] + "\n" + rest_url[0] + "\n" +
-                   rest_name[1] + "\n" + rest_url[1] + "\n" +
-                   rest_name[2] + "\n" + rest_url[2] + "\n" +
-                   rest_name[3] + "\n" + rest_url[3] + "\n" +
-                   rest_name[4] + "\n" + rest_url[4] 
-
+    $send_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
+                    rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
+                    rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
+                    rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
+                    rest_name[4] + "\n" + rest_url[4] 
+                   
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, send_message)
+    res = client.reply(replyToken, $send_message)
+
 
     if res.status == 200
       logger.info({success: res})
@@ -62,7 +81,8 @@ class WebhookController < ApplicationController
       response = conn.get do |req|
       req.params[:keyid] = 'f7ccc130ee2c327dce69399bc08f71e2'
       req.params[:format] = 'json'
-      req.params[:freeword]= input_text
+      req.params[:latitude] = latitude
+      req.params[:longitude] = longitude
       req.params[:hit_per_page] = 5
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
