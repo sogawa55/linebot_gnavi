@@ -31,9 +31,9 @@ class WebhookController < ApplicationController
           latitude = event["message"]["latitude"] # 緯度
           longitude = event["message"]["longitude"] # 経度
           $data = keyword_search(conn, latitude,longitude)
-          count = $data["total_hit_count"].to_i
-          if count >= 1 then
-             count.times do |x|
+          $count = $data["total_hit_count"].to_i
+          if $count >= 1 then
+             $count.times do |x|
              $y = x.to_i
              index = $y
              $rest_name[$y] = $data["rest"][index]["name"]
