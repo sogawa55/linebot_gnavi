@@ -35,8 +35,8 @@ class WebhookController < ApplicationController
           if $count >= 1 then
              $count.times do |x|
              $y = x.to_i
-             index = $y
-             $rest_name[$y] = $data["rest"][index]["name"]
+             $index = $y
+             $rest_name[$y] = $data["rest"][$index]["name"]
              end
              $rest_name.each do |name|
              $z = 0
