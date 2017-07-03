@@ -38,23 +38,29 @@ class WebhookController < ApplicationController
   
   
     rest_name = [] 
+    if rest_name != nil
     rest_name.push($data["rest"][0]["name"],
                    $data["rest"][1]["name"],
                    $data["rest"][2]["name"],
                    $data["rest"][3]["name"],
                    $data["rest"][4]["name"])
+    end
+    
     rest_url = []
+    if rest_name != nil
     rest_url.push($data["rest"][0]["url"],
                   $data["rest"][1]["url"],
                   $data["rest"][2]["url"],
                   $data["rest"][3]["url"],
                   $data["rest"][4]["url"])
+    end
                    
     result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
                      rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
                      rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
                      rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
                      rest_name[4] + "\n" + rest_url[4] 
+    
     
     if result_message.nil?
       $send_message = default_message
