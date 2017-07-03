@@ -45,7 +45,7 @@ class WebhookController < ApplicationController
              end
              $rest_name.each do |name|
              $z = 0
-             $result_message[$z] = name + "\n"
+             $result_message[$z] = name.to_s + "\n"
              $z += 1
              $send_message = $result_message
              end
