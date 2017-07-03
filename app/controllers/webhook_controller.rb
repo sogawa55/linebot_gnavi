@@ -28,8 +28,8 @@ class WebhookController < ApplicationController
          send_message = default_message
          
     elsif event["message"]["type"] == "location" then
-         latitude = event.message['latitude'] # 緯度
-         longitude = event.message['longitude'] # 経度
+         latitude = event["message"]["latitude"] # 緯度
+         longitude = event["message"]["longitude"] # 経度
          $data = keyword_search(conn, latitude,longitude)
          
          rest_name = [] 
