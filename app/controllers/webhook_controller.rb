@@ -24,13 +24,13 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     
     if event["message"]["type"] == "text" then
-         $default_message = "位置情報を入力してください。"
-         $send_message = $default_message
+         default_message = "位置情報を入力してください。"
+         send_message = default_message
          
     elsif event["message"]["type"] == "location" then
           latitude = event["message"]["latitude"] # 緯度
           longitude = event["message"]["longitude"] # 経度
-          $data = keyword_search(conn, latitude,longitude)
+          data = keyword_search(conn, latitude,longitude)
           rest_name = []
           
           x = 0
@@ -39,16 +39,16 @@ class WebhookController < ApplicationController
             x += 1 
           end
           
-          $send_message = rest_name[0]
+          send_message = rest_name[0]
     
       else
-        $send_message = "失敗"
+         send_message = "失敗"
     end 
 
     
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, $send_message)
+    res = client.reply(replyToken, send_message)
 
 
     if res.status == 200
