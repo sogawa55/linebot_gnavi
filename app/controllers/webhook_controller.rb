@@ -60,6 +60,7 @@ class WebhookController < ApplicationController
       $send_message = default_message
     else
       $send_message = result_message
+    end
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, $send_message)
