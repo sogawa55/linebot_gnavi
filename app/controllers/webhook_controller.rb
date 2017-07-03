@@ -34,30 +34,30 @@ class WebhookController < ApplicationController
           count = $data["total_hit_count"].to_i
           if count >= 1 then
              count.times do |x|
-             rest_name = []
-             rest_name.push($data["rest"][0]["name"])
+             $y = x
+             $rest_name = []
+             $rest_name.push($data["rest"][$y]["name"])
+             end
+             $z = 0
+             $rest_name.each do |name|
+             $result_message[$z] = name + "\n"
+             $z += 1
+             $send_message = $result_message
              end
              
-             z = 0
-             rest_name.each do |name|
-             result_message[z] = name + "\n"
-             z += 1
-             send_message = result_message
-             end
-         　   
-        　else
-         　  notfount_messeage = "検索結果はありません"
-          　send_message = notfount_messeage 
+          else
+            $notfound_message = "検索結果はありません"
+            $send_message = $notfound_message
           end
          
     else
-        send_message = "失敗や"
+        $send_message = "失敗や"
     end 
 
     
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, send_message)
+    res = client.reply(replyToken, $send_message)
 
 
     if res.status == 200
