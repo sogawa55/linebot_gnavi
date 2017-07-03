@@ -38,11 +38,11 @@ class WebhookController < ApplicationController
           if 	count >= 1
           data["rest"].each do |rest|
             rest_name[x] = rest["name"] + "\n"
-            rest_name.to_s
             x += 1 
           end
+          result_name = rest_name.join("\n")
       
-          send_message = rest_name
+          send_message = result_name
           
           else
             send_message = "結果ゼロ"
