@@ -40,7 +40,14 @@ class WebhookController < ApplicationController
             rest_name[x] = rest["name"]
             x += 1 
           end
-          send_message = rest_name[0]
+      
+          count.times do |y|
+          result_message = rest_name[y] + "\n"
+          send_message = result_message
+          end
+          
+          else
+            send_message = "結果ゼロ"
           end
     
       else
