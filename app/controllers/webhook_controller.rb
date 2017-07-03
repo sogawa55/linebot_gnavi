@@ -36,9 +36,9 @@ class WebhookController < ApplicationController
           $index = 0
           $result_message = []
    
-             $count.times do |x|
-             $rest_name[x] = $data["rest"][x]["name"]
-             end
+             
+             $rest_name[x] = $data["rest"][0]["name"]
+            
              $rest_name.each do |name|
              $z = 0
              $result_message[$z] = name.to_s + "\n"
