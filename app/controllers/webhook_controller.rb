@@ -41,7 +41,7 @@ class WebhookController < ApplicationController
             $send_message = $notfound_message
           else
              $count.times do |x|
-             $rest_name[$y] = $data["rest"][x]["name"]
+             $rest_name[x] = $data["rest"][x]["name"]
              end
              $rest_name.each do |name|
              $z = 0
