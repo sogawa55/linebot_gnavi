@@ -37,7 +37,8 @@ class WebhookController < ApplicationController
           x = 0
           if 	count >= 1
           data["rest"].each do |rest|
-            rest_name = rest["name"] + "\n"
+            rest_name[x] = rest["name"] + "\n"
+            rest_name.to_s
             x += 1 
           end
       
