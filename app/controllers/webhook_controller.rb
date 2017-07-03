@@ -35,17 +35,16 @@ class WebhookController < ApplicationController
           if count >= 1 then
              count.times do |x|
              y = x - 1
-         　   rest_name =  []
-         　   rest_name.push(data["rest"][y]["name"]) 
-         　   end   
-         　  
-         　   z = 0
-         　   rest_name.each do |name|
-         　   result_message[z] = name + "\n"
-         　   z += 1
-         　   
-         　   send_message = result_message
-         　   end
+             rest_name = []
+             rest_name.push(data["rest"][y]["name"])
+             end
+             
+             z = 0
+             rest_name.each do |name|
+             result_message[z] = name + "\n"
+             z += 1
+             send_message = result_message
+             end
          　   
         　else
          　  notfount_messeage = "検索結果はありません"
