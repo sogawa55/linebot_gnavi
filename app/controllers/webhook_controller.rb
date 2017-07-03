@@ -42,7 +42,7 @@ class WebhookController < ApplicationController
           end
       
           count.times do |y|
-          result_message = rest_name[y] + "\n"
+          result_message = rest_name[y].to_s + "\n"
           send_message = result_message
           end
           
