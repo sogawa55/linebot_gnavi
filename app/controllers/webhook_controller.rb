@@ -75,6 +75,7 @@ class WebhookController < ApplicationController
       req.params[:latitude] = latitude
       req.params[:longitude] = longitude
       req.params[:hit_per_page] = 5
+      req.params[:wifi] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
