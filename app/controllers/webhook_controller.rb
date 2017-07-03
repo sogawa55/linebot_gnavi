@@ -24,11 +24,11 @@ class WebhookController < ApplicationController
     replyToken = event["replyToken"]
     input_text = event["message"]["text"]
     
-    if event["message"]["type"] = "text"
+    if event["message"]["type"] = "text" then
          default_message = "位置情報を入力してください。"
          $send_message = default_message
          
-    elsif event["message"]["type"] = "location"
+    elsif event["message"]["type"] = "location" then
          latitude = event.message['latitude'] # 緯度
          longitude = event.message['longitude'] # 経度
          $data = keyword_search(conn, latitude,longitude)
@@ -57,7 +57,7 @@ class WebhookController < ApplicationController
          $send_message = result_message
          
     else
-         default_message = "位置情報を入力してください。"
+         default_message = "失敗や"
     end 
     
                    
