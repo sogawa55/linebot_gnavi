@@ -34,7 +34,6 @@ class WebhookController < ApplicationController
          $data = keyword_search(conn, latitude,longitude)
     else
          default_message = "位置情報を入力してください。"
-         $send_message = default_message
     end 
   
   
@@ -51,11 +50,16 @@ class WebhookController < ApplicationController
                   $data["rest"][3]["url"],
                   $data["rest"][4]["url"])
                    
-    $send_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
-                    rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
-                    rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
-                    rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
-                    rest_name[4] + "\n" + rest_url[4] 
+    result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
+                     rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
+                     rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
+                     rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
+                     rest_name[4] + "\n" + rest_url[4] 
+    
+    if result_message.nil?
+      $send_message = default_message
+    else
+      $send_message = result_message
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, $send_message)
