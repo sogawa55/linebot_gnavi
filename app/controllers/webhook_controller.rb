@@ -32,32 +32,32 @@ class WebhookController < ApplicationController
           longitude = event["message"]["longitude"] # 経度
           data = keyword_search(conn, latitude,longitude)
          
-         rest_name = [] 
-         rest_name.push(data["rest"][0]["name"],
-                   data["rest"][1]["name"],
-                   data["rest"][2]["name"],
-                   data["rest"][3]["name"],
-                   data["rest"][4]["name"])
-          
-        
-         rest_url = []
-         rest_url.push(data["rest"][0]["url"],
-                  data["rest"][1]["url"],
-                  data["rest"][2]["url"],
-                  data["rest"][3]["url"],
-                  data["rest"][4]["url"])
-                  
-         result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
-                          rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
-                          rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
-                          rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
-                          rest_name[4] + "\n" + rest_url[4] 
-        
-         send_message = result_message
+         　count = data["total_hit_count"]
+         　
+         　if count < 1
+         　
+         　   count.times do |x| 
+         　   y = x-1  
+         　   rest_name =  []
+         　   rest_name.push(data["rest"][y]["name"]) 
+         　   end   
+         　  
+         　   z = 0
+         　   rest_name.each do |name|
+         　   result_message[z] = name + "\n"
+         　   z += 1
+         　   end
+         　   
+         　else
+         　  notfount_messeage = "検索結果はありません"
+          　result_message = notfount_messeage 
+          　end
+         
+          send_message = result_message
          
     else
-         default_message = "失敗や"
-    end 
+          send_message = "失敗や"
+  　end 
     
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
