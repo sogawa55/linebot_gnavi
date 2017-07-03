@@ -13,36 +13,30 @@ class WebhookController < ApplicationController
       render :nothing => true, status: 470
     end
     
-    event = params["events"][0]
-    event_type = event["type"]
-    replyToken = event["replyToken"]
-    input_text = event["message"]["text"]
-    
-    events = request.body.read
-    
-    events.each { |line_event|
-      case line_event
-      when Line::Bot::Event::Messeage
-        case event.type
-        
-        when Line::Bot::Event::MessageType::Text
-         default_message = "位置情報を入力してください。"
-         $send_message = default_message
-        end
-        
-        when Line::Bot::Event::MessageType::Location
-         latitude = event.message['latitude'] # 緯度
-         longitude = event.message['longitude'] # 経度
-         $data = keyword_search(conn, latitude,longitude)
-      end
-    }
-    
-    
     conn = Faraday::Connection.new(url: 'http://api.gnavi.co.jp/RestSearchAPI/20150630/') do |builder|
       builder.use Faraday::Request::UrlEncoded
       builder.use Faraday::Response::Logger
       builder.use Faraday::Adapter::NetHttp
     end
+    
+    event = params["events"][0]
+    event_type = event["type"]
+    replyToken = event["replyToken"]
+    input_text = event["message"]["text"]
+    
+    if event["message"]["type"] = "text"
+         default_message = "位置情報を入力してください。"
+         $send_message = default_message
+         
+    elsif event["message"]["type"] = "location"
+         latitude = event.message['latitude'] # 緯度
+         longitude = event.message['longitude'] # 経度
+         $data = keyword_search(conn, latitude,longitude)
+    else
+         default_message = "位置情報を入力してください。"
+         $send_message = default_message
+    end 
+  
   
     rest_name = [] 
     rest_name.push($data["rest"][0]["name"],
