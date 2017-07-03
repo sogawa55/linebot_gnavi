@@ -34,7 +34,7 @@ class WebhookController < ApplicationController
           count = $data["total_hit_count"].to_i
           if count >= 1 then
              count.times do |x|
-             $y = x
+             $y = x.to_i
              $rest_name = []
              $rest_name.push($data["rest"][$y]["name"])
              end
