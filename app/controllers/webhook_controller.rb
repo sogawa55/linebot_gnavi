@@ -47,16 +47,16 @@ class WebhookController < ApplicationController
                   $data["rest"][2]["url"],
                   $data["rest"][3]["url"],
                   $data["rest"][4]["url"])
+                  
+         result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
+                          rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
+                          rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
+                          rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
+                          rest_name[4] + "\n" + rest_url[4] 
          
     else
          default_message = "位置情報を入力してください。"
     end 
-  
-    result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
-                     rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
-                     rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
-                     rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
-                     rest_name[4] + "\n" + rest_url[4] 
     
     
     if result_message.nil?
