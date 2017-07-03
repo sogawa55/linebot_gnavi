@@ -32,7 +32,7 @@ class WebhookController < ApplicationController
           longitude = event["message"]["longitude"] # 経度
           data = keyword_search(conn, latitude,longitude)
           count = data["total_hit_count"].to_i
-         　if count > 1
+          if count > 1 then
          　   count.times do |x| 
          　   y = x-1  
          　   rest_name =  []
@@ -47,7 +47,7 @@ class WebhookController < ApplicationController
          　   send_message = result_message
          　   end
          　   
-        　else
+        　else 
          　  notfount_messeage = "検索結果はありません"
           　send_message = notfount_messeage 
          
