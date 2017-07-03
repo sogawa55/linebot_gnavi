@@ -53,17 +53,13 @@ class WebhookController < ApplicationController
                           rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
                           rest_name[3] + "\n" + rest_url[3] + "\n" + "\n" +
                           rest_name[4] + "\n" + rest_url[4] 
+        
+         $send_message = result_message
          
     else
          default_message = "位置情報を入力してください。"
     end 
     
-    
-    if result_message.nil?
-      $send_message = default_message
-    else
-      $send_message = result_message
-    end
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, $send_message)
