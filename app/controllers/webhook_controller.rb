@@ -37,7 +37,7 @@ class WebhookController < ApplicationController
           $result_message = []
    
              
-             $rest_name[x] = $data["rest"][0]["name"]
+             $rest_name[0] = $data["rest"][0]["name"]
             
              $rest_name.each do |name|
              $z = 0
