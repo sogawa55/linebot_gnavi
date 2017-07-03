@@ -38,18 +38,8 @@ class WebhookController < ApplicationController
             rest_name[x] = rest["name"]
             x += 1 
           end
-            
-          
-          $count = $data["total_hit_count"].to_i
-          $index = 0
-          $result_message = []
-            
-             $rest_name.each do |name|
-             $z = 0
-             $result_message[$z] = name.to_s + "\n"
-             $z += 1
-             $send_message = $result_message
-             end
+          $send_message = rest_name
+      
     end 
 
     
