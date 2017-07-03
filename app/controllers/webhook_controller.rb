@@ -31,10 +31,9 @@ class WebhookController < ApplicationController
           latitude = event["message"]["latitude"] # 緯度
           longitude = event["message"]["longitude"] # 経度
           data = keyword_search(conn, latitude,longitude)
-         
-         　if data.count > 1
-         　
-         　  data.count.times do |x| 
+          count = data["total_hit_count"]
+         　if count > 1
+         　   count.times do |x| 
          　   y = x-1  
          　   rest_name =  []
          　   rest_name.push(data["rest"][y]["name"]) 
