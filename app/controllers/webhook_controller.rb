@@ -46,18 +46,18 @@ class WebhookController < ApplicationController
          　   rest_name.each do |name|
          　   result_message[z] = name + "\n"
          　   z += 1
+         　   
+         　   send_message = result_message
          　   end
          　   
-         　else
+        　else
          　  notfount_messeage = "検索結果はありません"
-          　result_message = notfount_messeage 
-          　end
-         
-          send_message = result_message
+          　send_message = notfount_messeage 
          
     else
-          send_message = "失敗や"
-  　end 
+        send_message = "失敗や"
+    end 
+
     
                    
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
