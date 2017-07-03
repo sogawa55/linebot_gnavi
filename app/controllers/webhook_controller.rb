@@ -37,7 +37,7 @@ class WebhookController < ApplicationController
              $count.times do |x|
              $y = x.to_i
              $index = $y
-             $rest_name[$y] = $data["rest"][$index]["name"]
+             $rest_name[$y] = $data["rest"][0]["name"]
              end
              $rest_name.each do |name|
              $z = 0
