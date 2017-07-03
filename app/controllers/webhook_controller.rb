@@ -32,29 +32,26 @@ class WebhookController < ApplicationController
          latitude = event.message['latitude'] # 緯度
          longitude = event.message['longitude'] # 経度
          $data = keyword_search(conn, latitude,longitude)
-    else
-         default_message = "位置情報を入力してください。"
-    end 
-  
-  
-    rest_name = [] 
-    if rest_name != nil
-    rest_name.push($data["rest"][0]["name"],
+         
+         rest_name = [] 
+         rest_name.push($data["rest"][0]["name"],
                    $data["rest"][1]["name"],
                    $data["rest"][2]["name"],
                    $data["rest"][3]["name"],
                    $data["rest"][4]["name"])
-    end
-    
-    rest_url = []
-    if rest_name != nil
-    rest_url.push($data["rest"][0]["url"],
+          
+        
+         rest_url = []
+         rest_url.push($data["rest"][0]["url"],
                   $data["rest"][1]["url"],
                   $data["rest"][2]["url"],
                   $data["rest"][3]["url"],
                   $data["rest"][4]["url"])
-    end
-                   
+         
+    else
+         default_message = "位置情報を入力してください。"
+    end 
+  
     result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
                      rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
                      rest_name[2] + "\n" + rest_url[2] + "\n" + "\n" +
