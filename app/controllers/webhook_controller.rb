@@ -28,24 +28,24 @@ class WebhookController < ApplicationController
          send_message = default_message
          
     elsif event["message"]["type"] == "location" then
-         latitude = event["message"]["latitude"] # 緯度
-         longitude = event["message"]["longitude"] # 経度
-         $data = keyword_search(conn, latitude,longitude)
+          latitude = event["message"]["latitude"] # 緯度
+          longitude = event["message"]["longitude"] # 経度
+          data = keyword_search(conn, latitude,longitude)
          
          rest_name = [] 
-         rest_name.push($data["rest"][0]["name"],
-                   $data["rest"][1]["name"],
-                   $data["rest"][2]["name"],
-                   $data["rest"][3]["name"],
-                   $data["rest"][4]["name"])
+         rest_name.push(data["rest"][0]["name"],
+                   data["rest"][1]["name"],
+                   data["rest"][2]["name"],
+                   data["rest"][3]["name"],
+                   data["rest"][4]["name"])
           
         
          rest_url = []
-         rest_url.push($data["rest"][0]["url"],
-                  $data["rest"][1]["url"],
-                  $data["rest"][2]["url"],
-                  $data["rest"][3]["url"],
-                  $data["rest"][4]["url"])
+         rest_url.push(data["rest"][0]["url"],
+                  data["rest"][1]["url"],
+                  data["rest"][2]["url"],
+                  data["rest"][3]["url"],
+                  data["rest"][4]["url"])
                   
          result_message = rest_name[0] + "\n" + rest_url[0] + "\n" + "\n" +
                           rest_name[1] + "\n" + rest_url[1] + "\n" + "\n" +
@@ -81,7 +81,7 @@ class WebhookController < ApplicationController
       req.params[:latitude] = latitude
       req.params[:longitude] = longitude
       req.params[:hit_per_page] = 5
-      req.params[:wifi] = 1
+      req.params[:bottomless_cup] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
