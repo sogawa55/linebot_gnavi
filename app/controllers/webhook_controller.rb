@@ -34,7 +34,8 @@ class WebhookController < ApplicationController
           $count = $data["total_hit_count"].to_i
           $rest_name = []
           $index = 0
-          if $count == 0
+          $result_message = []
+          if $count.to_i == 0
             $notfound_message = "検索結果はありません"
             $send_message = $notfound_message
           else
