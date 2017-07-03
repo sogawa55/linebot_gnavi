@@ -31,18 +31,18 @@ class WebhookController < ApplicationController
           latitude = event["message"]["latitude"] # 緯度
           longitude = event["message"]["longitude"] # 経度
           data = keyword_search(conn, latitude,longitude)
-          rest_name = []
+          $rest_name = []
           count = data["total_hit_count"].to_i
           
           x = 0
           if 	count >= 1
           data["rest"].each do |rest|
-            rest_name[x] = rest["name"]
+            $rest_name[x] = rest["name"]
             x += 1 
           end
       
           count.times do |y|
-          result_message = rest_name[y].to_s + "\n"
+          result_message = $rest_name[y].to_s + "\n"
           send_message = result_message
           end
           
