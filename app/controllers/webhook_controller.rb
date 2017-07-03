@@ -25,16 +25,25 @@ class WebhookController < ApplicationController
     end
     
              # GETでAPIを叩く
-    output_text = keyword_search(conn, input_text)
-    message = [] 
-    message.push(output_text["rest"][0]["name"],
-                 output_text["rest"][1]["name"],
-                 output_text["rest"][2]["name"],
-                 output_text["rest"][3]["name"],
-                 output_text["rest"][4]["name"])
-    send_message = message[0] + "\n" + message[1] + "\n" +
-                   message[2] + "\n" + message[3] + "\n" + 
-                   message[4]
+    data = keyword_search(conn, input_text)
+    rest_name = [] 
+    rest_name.push(data["rest"][0]["name"],
+                   data["rest"][1]["name"],
+                   data["rest"][2]["name"],
+                   data["rest"][3]["name"],
+                   data["rest"][4]["name"])
+    rest_url = []
+    rest_url.push(data["rest"][0]["url_mobile"],
+                  data["rest"][1]["url_mobile"],
+                  data["rest"][2]["url_mobile"],
+                  data["rest"][3]["url_mobile"],
+                  data["rest"][4]["url_mobile"])
+                   
+    send_message = rest_name[0] + "\n" + rest_url[0] + "\n" +
+                   rest_name[1] + "\n" + rest_url[1] + "\n" +
+                   rest_name[2] + "\n" + rest_url[2] + "\n" +
+                   rest_name[3] + "\n" + rest_url[3] + "\n" +
+                   rest_name[4] + "\n" + rest_url[4] + "\n" +
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, send_message)
