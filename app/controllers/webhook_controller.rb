@@ -30,16 +30,12 @@ class WebhookController < ApplicationController
     elsif event["message"]["type"] == "location" then
           latitude = event["message"]["latitude"] # 緯度
           longitude = event["message"]["longitude"] # 経度
-          $data = {}
           $data = keyword_search(conn, latitude,longitude)
           $count = $data["total_hit_count"].to_i
           $rest_name = []
           $index = 0
           $result_message = []
-          if $count.to_i == 0
-            $notfound_message = "検索結果はありません"
-            $send_message = $notfound_message
-          else
+   
              $count.times do |x|
              $rest_name[x] = $data["rest"][x]["name"]
              end
@@ -49,10 +45,6 @@ class WebhookController < ApplicationController
              $z += 1
              $send_message = $result_message
              end
-          end
-         
-    else
-        $send_message = "失敗や"
     end 
 
     
