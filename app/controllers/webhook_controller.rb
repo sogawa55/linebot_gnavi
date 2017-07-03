@@ -35,11 +35,11 @@ class WebhookController < ApplicationController
           if count >= 1 then
              count.times do |x|
              $y = x.to_i
-             $rest_name = []
-             $rest_name.push($data["rest"][0]["name"])
+             index = $y
+             $rest_name[$y] = $data["rest"][index]["name"]
              end
-             $z = 0
              $rest_name.each do |name|
+             $z = 0
              $result_message[$z] = name + "\n"
              $z += 1
              $send_message = $result_message
