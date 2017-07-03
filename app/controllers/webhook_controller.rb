@@ -47,9 +47,10 @@ class WebhookController < ApplicationController
          　   send_message = result_message
          　   end
          　   
-        　else 
+        　else
          　  notfount_messeage = "検索結果はありません"
           　send_message = notfount_messeage 
+          end
          
     else
         send_message = "失敗や"
