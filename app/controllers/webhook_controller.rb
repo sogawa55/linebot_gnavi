@@ -40,12 +40,12 @@ class WebhookController < ApplicationController
             rest_name[x] = rest["name"] + "\n" + rest["url"] + "\n"
             x += 1 
           end
-          result_name = count + "件見つけたよ。" + "\n" + rest_name.join("\n")
+          result_name = "#{count}件見つけたよ。" + "\n" + rest_name.join("\n")
       
           send_message = result_name
           
           else
-            send_message = "見つからなかったよ。"
+            send_message = "見つからなかったよ。もう少し移動してみて。"
           end
     
       else
