@@ -40,7 +40,7 @@ class WebhookController < ApplicationController
             rest_name[x] = rest["name"] + "\n" + rest["url"] + "\n"
             x += 1 
           end
-          result_name = "#{count}件見つけたよ。" + "\n" + rest_name.join("\n")
+          result_name = "#{count}件見つけたよ。" + "\n\n" + rest_name.join("\n")
       
           send_message = result_name
           
@@ -77,6 +77,7 @@ class WebhookController < ApplicationController
       req.params[:hit_per_page] = 5
       req.params[:wifi] = 1
       req.params[:outret] = 1 
+      req.params[:range] = 1
       req.headers['Content-Type'] = 'application/json; charset=UTF-8'
     end
     
