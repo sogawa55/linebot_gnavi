@@ -6,7 +6,7 @@
 * 半径500メートル以内
 
 <img src="https://user-images.githubusercontent.com/26180642/28941497-33677cfe-78d3-11e7-9db9-a012e2f7c96d.jpg" width="450px">
-<img src="https://user-images.githubusercontent.com/26180642/28941489-2ed7057e-78d3-11e7-983b-278ae2e92ae8.jpg" width="400px">
+<img src="https://user-images.githubusercontent.com/26180642/28941489-2ed7057e-78d3-11e7-983b-278ae2e92ae8.jpg" width="450px">
 
 
 ## 使用技術
