@@ -25,7 +25,6 @@ class LineClient
     end
     res
   end
-　
 　#replyTokenと返答用メッセージをまとめる
   def reply(replyToken, text)
 
