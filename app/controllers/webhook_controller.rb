@@ -1,7 +1,6 @@
 class WebhookController < ApplicationController
   # Lineからのcallbackか認証
   protect_from_forgery with: :null_session
-　
   CHANNEL_SECRET = ENV['CHANNEL_SECRET']
   OUTBOUND_PROXY = ENV['OUTBOUND_PROXY']
   CHANNEL_ACCESS_TOKEN = ENV['CHANNEL_ACCESS_TOKEN']
