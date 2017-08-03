@@ -59,7 +59,6 @@ class WebhookController < ApplicationController
       else
          send_message = "失敗"
     end 
-
     
     #LINEクライアントのインスタンス生成              
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -71,7 +70,7 @@ class WebhookController < ApplicationController
     else
       logger.info({fail: res})
     end
-　　#何も表示しない
+    #何も表示しない
     render :nothing => true, status: :ok
   end
   
@@ -99,7 +98,7 @@ class WebhookController < ApplicationController
   
   
   private
-  # verify access from LINE
+  #verify access from LINE
   def is_validate_signature
     signature = request.headers["X-LINE-Signature"]
     http_request_body = request.raw_post
