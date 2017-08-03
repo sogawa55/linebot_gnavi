@@ -14,7 +14,7 @@ class LineClient
       conn.adapter Faraday.default_adapter
       conn.proxy @proxy
     end
-　　#Faradayのpostメソッドを実行してLINEサーバにアクセス
+    #Faradayのpostメソッドを実行してLINEサーバにアクセス
     res = client.post do |request|
       request.url path
       request.headers = {
@@ -25,7 +25,7 @@ class LineClient
     end
     res
   end
-　#replyTokenと返答用メッセージをまとめる
+  #replyTokenと返答用メッセージをまとめる
   def reply(replyToken, text)
 
     messages = [
