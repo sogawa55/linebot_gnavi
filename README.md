@@ -18,3 +18,5 @@
 * LINE Messaging API
 * ぐるなびレストラン検索 API
 
+*※追記
+
